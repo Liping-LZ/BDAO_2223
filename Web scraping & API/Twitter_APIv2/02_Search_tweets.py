@@ -35,7 +35,7 @@ def create_url(keyword, max_results): # If you are retrieving recent tweets, rem
     query_params = {'query': keyword,
                     'max_results': max_results,
                     'expansions': 'author_id,in_reply_to_user_id,geo.place_id',
-                    'tweet.fields': 'id,text,author_id,in_reply_to_user_id,geo,conversation_id,created_at,lang,public_metrics,referenced_tweets,reply_settings,source',
+                    'tweet.fields': 'id,text,author_id,in_reply_to_user_id,geo,conversation_id,created_at,lang,public_metrics,referenced_tweets,reply_settings', #Note:"source" field has been removed
                     'user.fields': 'id,name,username,created_at,description,public_metrics,verified',
                     'place.fields': 'full_name,id,country,country_code,geo,name,place_type',
                     'next_token': {}}
@@ -56,7 +56,7 @@ keyword = 'specialty coffee'
 # here is the official documentation to help you understand how to build query with correct operators: https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query
 
 # Remember with standard account, you can only retrieve recent 7-day tweets with search_tweet endpoint, so when you are setting the timeframe the earliest date you can set is 7 day before your current date
-url = create_url(keyword, start_time, end_time, max_results)
+url = create_url(keyword, max_results)
 json_response = connect_to_endpoint(url[0], url[1])
 
 print(json.dumps(json_response, indent=4, sort_keys=True))
@@ -107,14 +107,11 @@ def append_to_csv(json_response, fileName):
         like_count = tweet['public_metrics']['like_count']
         quote_count = tweet['public_metrics']['quote_count']
 
-        # 6. source
-        source = tweet['source']
-
-        # 7. Tweet text
+        # 6. Tweet text
         text = tweet['text']
         
         # Assemble all data in a list
-        res = [author_id, created_at, tweet_id, conversation_id, like_count, quote_count, reply_count, retweet_count, source, text]
+        res = [author_id, created_at, tweet_id, conversation_id, like_count, quote_count, reply_count, retweet_count, text]
         
         # Append the result to the CSV file
         csvWriter.writerow(res)
