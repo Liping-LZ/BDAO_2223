@@ -25,12 +25,15 @@ def bearer_oauth(r):
 def create_url():
     # Specify the usernames that you want to lookup below
     # You can enter up to 100 comma-separated values.
-    usernames = "usernames=MercedesBenz,BMW,Honda,VW" # Here is just example, put the name of the account that you want to search. Here I have put 4 accounts to search
+    usernames = "usernames=MercedesBenz,BMW,Honda,VW" 
+    # Here is just example, put the name of the account that you want to search. Here I have put 4 accounts to search
+    
     user_fields = "user.fields=description,created_at,id,public_metrics,url,verified"
     # User fields are adjustable, options include:
     # created_at, description, entities, id, location, name,
     # pinned_tweet_id, profile_image_url, protected,
     # public_metrics, url, username, verified, and withheld
+    
     url = "https://api.twitter.com/2/users/by?{}&{}".format(usernames, user_fields)
     return url
 
