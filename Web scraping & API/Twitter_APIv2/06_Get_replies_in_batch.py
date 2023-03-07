@@ -51,7 +51,7 @@ def create_url(keyword, start_date, end_date, max_results): # If you are retriev
                     'end_time': end_date,
                     'max_results': max_results,
                     'expansions': 'author_id,in_reply_to_user_id,geo.place_id',
-                    'tweet.fields': 'id,text,author_id,in_reply_to_user_id,geo,conversation_id,created_at,lang,public_metrics,referenced_tweets,reply_settings,source',
+                    'tweet.fields': 'id,text,author_id,in_reply_to_user_id,geo,conversation_id,created_at,lang,public_metrics,referenced_tweets,reply_settings',
                     'user.fields': 'id,name,username,created_at,description,public_metrics,verified',
                     'place.fields': 'full_name,id,country,country_code,geo,name,place_type',
                     'next_token': {}}
@@ -97,14 +97,11 @@ def append_to_csv(json_response, fileName):
         like_count = tweet['public_metrics']['like_count']
         quote_count = tweet['public_metrics']['quote_count']
 
-        # 6. source
-        source = tweet['source']
-
-        # 7. Tweet text
+        # 6. Tweet text
         text = tweet['text']
         
         # Assemble all data in a list
-        res = [author_id, created_at, tweet_id, like_count, quote_count, reply_count, retweet_count, source, text]
+        res = [author_id, created_at, tweet_id, like_count, quote_count, reply_count, retweet_count, text]
         
         # Append the result to the CSV file
         csvWriter.writerow(res)
@@ -128,7 +125,7 @@ csvFile = open("File_name.csv", "a", newline="", encoding='utf-8')
 csvWriter = csv.writer(csvFile)
 
 #Create headers for the data you want to save, in this example, we only want save these columns in our dataset
-csvWriter.writerow(['author id', 'created_at', 'id','like_count', 'quote_count', 'reply_count','retweet_count','source','tweet'])
+csvWriter.writerow(['author id', 'created_at', 'id','like_count', 'quote_count', 'reply_count','retweet_count','tweet'])
 csvFile.close()
 
 for i in range(0,len(keyword_list)): # create for loop for your conversation_ids
