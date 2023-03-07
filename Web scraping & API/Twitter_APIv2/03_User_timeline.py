@@ -78,7 +78,7 @@ def append_to_csv(json_response, fileName):
     csvWriter = csv.writer(csvFile)
 
     #Create headers for the data
-    csvWriter.writerow(['author id', 'created_at', 'id','conversation_id', 'like_count', 'quote_count', 'reply_count','retweet_count','source','tweet'])
+    csvWriter.writerow(['author id', 'created_at', 'id','conversation_id', 'like_count', 'quote_count', 'reply_count','retweet_count','tweet'])
     # This only need to run at the first time. If you want to append more tweets to the same csv file, you need to comment this line of code to avoid the header being written again.
 
     #Loop through each tweet
@@ -106,14 +106,12 @@ def append_to_csv(json_response, fileName):
         like_count = tweet['public_metrics']['like_count']
         quote_count = tweet['public_metrics']['quote_count']
 
-        # 6. source
-        source = tweet['source']
 
-        # 7. Tweet text
+        # 6. Tweet text
         text = tweet['text']
         
         # Assemble all data in a list
-        res = [author_id, created_at, tweet_id, conversation_id, like_count, quote_count, reply_count, retweet_count, source, text]
+        res = [author_id, created_at, tweet_id, conversation_id, like_count, quote_count, reply_count, retweet_count, text]
         
         # Append the result to the CSV file
         csvWriter.writerow(res)
